@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Minecrafter - Every Minecraft Moment, Captured",
+  title: "Thet Thet Mon",
   description: "Developed by Danial",
   icons: {
-    icon: "/icon.png"
+    icon: "/noise.png"
   },
 };
 
