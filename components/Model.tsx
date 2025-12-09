@@ -10,7 +10,7 @@ function Model() {
 
   return (
     <>
-      <div className="fixed z-50 top-3 right-3 md:top-5 md:right-5 bg-black backdrop-blur-lg size-11 rounded-full">
+      <div className="fixed z-50 top-3 right-3 bg-center md:top-5 md:right-5 bg-black backdrop-blur-lg size-11 rounded-full">
         <button
           className="size-full cursor-pointer rounded-full flex items-center justify-center"
           onClick={() => setModel(!model)}
