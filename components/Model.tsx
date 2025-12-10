@@ -10,9 +10,9 @@ function Model() {
 
   return (
     <>
-      <div className="fixed z-50 top-3 right-3 bg-center md:top-5 md:right-5 bg-black backdrop-blur-lg size-11 rounded-full">
+      <div className="fixed z-50 top-3 right-3 bg-center md:top-5 md:right-5 bg-black/50 active:scale-75 duration-300 border border-white/25 backdrop-blur-sm rounded-full">
         <button
-          className="size-full cursor-pointer rounded-full flex items-center justify-center"
+          className="h-11 px-3 cursor-pointer rounded-full flex items-center justify-center"
           onClick={() => setModel(!model)}
         >
           {/* <img
@@ -22,25 +22,28 @@ function Model() {
               model && "scale-0 rotate-180"
             }`}
           /> */}
-          <div
-            className={`text-3xl text-white/70 absolute inset-0 flex items-center justify-center ease-out duration-700 ${
-              model && "scale-0"
-            }`}
-          >
-            <IoMenuSharp />
-          </div>
-          <div
-            className={`text-3xl text-white/70 absolute inset-0 flex items-center justify-center ease-out duration-700 ${
-              !model && "scale-0 -rotate-180"
-            }`}
-          >
-            <IoClose />
+          <div className={`ps-1.5 text-sm duration-300 uppercase ${model ? "tracking-[0.4rem]" : "tracking-[0.2rem]"}`}>Menu</div>
+          <div className="relative w-6">
+            <div
+              className={`text-xl text-white/70 absolute inset-0 flex items-center justify-center ease-out duration-700 ${
+                model && "scale-0"
+              }`}
+            >
+              <IoMenuSharp />
+            </div>
+            <div
+              className={`text-xl text-white/70 absolute inset-0 flex items-center justify-center ease-out duration-700 ${
+                !model && "scale-0 -rotate-180"
+              }`}
+            >
+              <IoClose />
+            </div>
           </div>
         </button>
       </div>
       <div
         onClick={() => setModel(false)}
-        className={`fixed duration-500 inset-0 bg-black/20 z-40 flex items-start justify-end px-5 py-20 backdrop-blur-sm transition-opacity ${
+        className={`fixed duration-500 inset-0 bg-black/50 border border-white/25 backdrop-blur-sm z-40 flex items-start justify-end px-5 py-20 transition-opacity ${
           model ? "" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -50,9 +53,9 @@ function Model() {
         >
           <a
             href="#"
-            className={`h-11 duration-500 hover:scale-105 flex items-center justify-center rounded-full bg-black ${
+            className={`h-11 duration-500 active:scale-75 flex items-center justify-center rounded-full bg-black/50 border border-white/25 backdrop-blur-sm ${
               model && !showUpload
-                ? "w-32 delay-200"
+                ? "w-28 delay-200"
                 : "-translate-y-14 delay-0 blur-lg translate-x-1 w-11 scale-50 text-xs"
             }`}
           >
@@ -60,7 +63,7 @@ function Model() {
           </a>
           <a
             href="#"
-            className={`h-11 duration-500 delay-100 hover:scale-105 flex items-center justify-center rounded-full bg-black ${
+            className={`h-11 duration-500 delay-100 active:scale-75 flex items-center justify-center rounded-full bg-black/50 border border-white/25 backdrop-blur-sm ${
               model && !showUpload
                 ? "w-24"
                 : "-translate-y-28 blur-lg translate-x-1 w-11 scale-50 text-xs"
@@ -70,7 +73,7 @@ function Model() {
           </a>
           <button
             onClick={() => setShowUpload(true)}
-            className={`h-11 duration-500 hover:scale-105 cursor-pointer flex items-center justify-center rounded-full bg-black ${
+            className={`h-11 duration-500 active:scale-75 cursor-pointer flex items-center justify-center rounded-full bg-black/50 border border-white/25 backdrop-blur-sm ${
               model && !showUpload
                 ? "w-36 delay-0"
                 : "-translate-y-44 delay-200 blur-lg translate-x-1 w-11 scale-50 text-xs"
@@ -82,11 +85,16 @@ function Model() {
       </div>
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center duration-700 ${
-          showUpload ? "" : "pointer-events-none opacity-0 scale-50 ease-out translate-y-full blur-2xl"
+          showUpload
+            ? ""
+            : "pointer-events-none opacity-0 scale-50 ease-out translate-y-full blur-2xl"
         }`}
         onClick={() => setShowUpload(false)}
       >
-        <div className="w-full max-w-2xl p-4" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="w-full max-w-2xl p-4"
+          onClick={(e) => e.stopPropagation()}
+        >
           <UploadImage onUpload={(urls) => setUploadedUrls(urls)} />
         </div>
       </div>

@@ -93,7 +93,7 @@ export default function UploadImage({ onUpload }: UploadImageProps) {
       {selectedFile && !uploadedUrl && (
         <div className="space-y-3">
           <div
-            className="relative w-full aspect-video rounded-3xl overflow-hidden group"
+            className="relative w-full aspect-square rounded-3xl overflow-hidden group"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();
