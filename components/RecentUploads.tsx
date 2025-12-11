@@ -82,7 +82,7 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
           })}
       </div>
 
-      <div className="sticky w-fit bottom-0 p-2 z-20 flex flex-col-reverse md:flex-row md:items-center gap-1">
+      <div className="sticky w-fit bottom-0 p-2 z-20 flex gap-1">
         <button
           onClick={() => setGrider(!grider)}
           className="bg-black/60 z-20 text-white backdrop-blur-sm size-10 flex items-center justify-center rounded-full border-white/20 cursor-pointer active:scale-90 hover:scale-105 duration-300 border"
@@ -92,13 +92,13 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
           />
         </button>
         <div
-          className={`flex flex-col md:flex-row gap-1 justify-between w-fit duration-500 ${
+          className={`flex gap-1 justify-between w-fit duration-500 ${
             grider
               ? ""
-              : "translate-y-ful md:translate-y-0 md:-translate-x-full scale-50 blur-xl pointer-events-none"
+              : "-translate-x-full opacity-0 scale-50 blur-xl pointer-events-none"
           }`}
         >
-          <div className="flex flex-col md:flex-row gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
+          <div className="flex gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
             <button
               onClick={() => setGridMode(1)}
               className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
@@ -150,7 +150,7 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
               <CiGrid42 size={16} />
             </button>
           </div>
-          <div className="flex flex-col md:flex-row gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
+          <div className="flex gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
             <button
               onClick={() => setSquare(true)}
               className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
