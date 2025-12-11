@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import RecentUploads from "@/components/RecentUploads";
-import Model from "./Model";
 
 function Main() {
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
@@ -21,8 +20,7 @@ function Main() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black/70">
-      <Model />
+    <div className="min-h-screen">
       <RecentUploads urls={uploadedUrls} />
     </div>
   );

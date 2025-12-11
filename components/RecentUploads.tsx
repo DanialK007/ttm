@@ -4,9 +4,9 @@ import { useState } from "react";
 import { FaThLarge, FaTh, FaThList, FaBorderAll } from "react-icons/fa";
 import { FiSquare, FiMaximize } from "react-icons/fi";
 import { CiGrid2H, CiGrid2V, CiGrid42 } from "react-icons/ci";
-import { BsGrid } from "react-icons/bs";
+import { BsFillGridFill, BsGrid } from "react-icons/bs";
 import { TfiLayoutGrid3 } from "react-icons/tfi";
-import { MdOutlineFileDownload } from "react-icons/md";
+import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
 
 export default function RecentUploads({ urls }: { urls: string[] }) {
   const [square, setSquare] = useState(false);
@@ -14,7 +14,10 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
     "auto"
   );
   const [modalOpen, setModalOpen] = useState(false);
+  const [grider, setGrider] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   if (!urls.length) return null;
 
@@ -32,7 +35,7 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
   return (
     <>
       <div
-        className={`grid gap-2 p-2 ${
+        className={`grid gap-2 w-fit mx-auto p-2 ${
           gridMode === "auto"
             ? "grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             : gridMode === "4-responsive"
@@ -62,9 +65,9 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
                 className={
                   gridMode === "auto"
                     ? isBig
-                      ? "rounded-2xl md:rounded-3xl overflow-hidden active:scale-90 duration-300 col-span-2 row-span-2"
-                      : "rounded-2xl md:rounded-3xl overflow-hidden active:scale-90 duration-300"
-                    : "rounded-2xl md:rounded-3xl overflow-hidden active:scale-90 duration-300"
+                      ? "rounded-2xl border max-w-2xl border-white/20 md:rounded-3xl overflow-hidden active:scale-90 duration-300 col-span-2 row-span-2"
+                      : "rounded-2xl border max-w-2xl border-white/20 md:rounded-3xl overflow-hidden active:scale-90 duration-300"
+                    : "rounded-2xl border max-w-2xl border-white/20 md:rounded-3xl overflow-hidden active:scale-90 duration-300"
                 }
               >
                 <img
@@ -79,14 +82,28 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
           })}
       </div>
 
-      <div className="sticky bottom-0 p-2 z-20">
-        <div className="flex gap-1 justify-between w-fit">
-          <div className="flex gap-1 p-1 bg-black/20 backdrop-blur-sm rounded-full border border-white/20">
+      <div className="sticky w-fit bottom-0 p-2 z-20 flex flex-col-reverse md:flex-row md:items-center gap-1">
+        <button
+          onClick={() => setGrider(!grider)}
+          className="bg-black/60 z-20 text-white backdrop-blur-sm size-10 flex items-center justify-center rounded-full border-white/20 cursor-pointer active:scale-90 hover:scale-105 duration-300 border"
+        >
+          <BsFillGridFill
+            className={`duration-300 ${!grider && "rotate-180"}`}
+          />
+        </button>
+        <div
+          className={`flex flex-col md:flex-row gap-1 justify-between w-fit duration-500 ${
+            grider
+              ? ""
+              : "translate-y-ful md:translate-y-0 md:-translate-x-full scale-50 blur-xl pointer-events-none"
+          }`}
+        >
+          <div className="flex flex-col md:flex-row gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
             <button
               onClick={() => setGridMode(1)}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 gridMode === 1
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -94,9 +111,9 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
             </button>
             <button
               onClick={() => setGridMode(2)}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 gridMode === 2
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -104,9 +121,9 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
             </button>
             <button
               onClick={() => setGridMode(3)}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 gridMode === 3
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -114,9 +131,9 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
             </button>
             <button
               onClick={() => setGridMode("4-responsive")}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 gridMode === "4-responsive"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -124,21 +141,21 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
             </button>
             <button
               onClick={() => setGridMode("auto")}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 gridMode === "auto"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
               <CiGrid42 size={16} />
             </button>
           </div>
-          <div className="flex gap-1 p-1 bg-black/20 backdrop-blur-sm rounded-full border border-white/20">
+          <div className="flex flex-col md:flex-row gap-1 p-1 bg-black/40 backdrop-blur-sm rounded-full border border-white/20">
             <button
               onClick={() => setSquare(true)}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 square === true
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -146,9 +163,9 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
             </button>
             <button
               onClick={() => setSquare(false)}
-              className={`size-8 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
+              className={`size-8 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-300 border ${
                 square === false
-                  ? "bg-black text-white"
+                  ? "bg-black text-white border-white/50"
                   : "bg-black/30 backdrop-blur-sm"
               }`}
             >
@@ -165,25 +182,44 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
         onClick={() => setModalOpen(false)}
       >
         {selectedImage && (
-          <div className="relative py-20 space-y-2">
+          <div className="relative py-20 space-y-2 min-h-96 flex flex-col justify-between">
             <img
               key={selectedImage}
               src={selectedImage.replace("/upload/", "/upload/q_auto,f_auto/")}
-              className={`max-h-[85vh] max-w-[85vw] rounded-2xl shadow-2xl bg-black`}
+              className={`max-h-[85vh] max-w-[85vw] rounded-2xl shadow-2xl bg-black/80`}
               onClick={(e) => e.stopPropagation()}
             />
-            <div className="abso lute bottom-0 left-0 flex justify-end h-10 w-full">
+            <div className="flex justify-between h-10 w-full">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!selectedImage) return;
+                  setConfirmDelete(true);
+                }}
+                className={`h-9 flex items-center justify-center rounded-full border-red-500/25 cursor-pointer active:scale-90 hover:scale-105 duration-700 border bg-black/50 hover:bg-black text-red-500 overflow-hidden ${
+                  modalOpen ? "delay-50 w-24" : "blur-2xl w-5"
+                }`}
+              >
+                <MdDelete className="me-1 text-lg" />
+                <span>Delete</span>
+              </button>
               <button
                 onClick={async (e) => {
                   e.stopPropagation();
                   if (!selectedImage) return;
                   try {
-                    const response = await fetch(selectedImage.replace("/upload/", "/upload/q_auto,f_auto/"));
+                    const response = await fetch(
+                      selectedImage.replace(
+                        "/upload/",
+                        "/upload/q_auto,f_auto/"
+                      )
+                    );
                     const blob = await response.blob();
                     const url = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
+                    const link = document.createElement("a");
                     link.href = url;
-                    link.download = selectedImage.split('/').pop() || 'download.jpg';
+                    link.download =
+                      selectedImage.split("/").pop() || "download.jpg";
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -192,12 +228,68 @@ export default function RecentUploads({ urls }: { urls: string[] }) {
                     console.error("Download failed", err);
                   }
                 }}
-                className={`h-9 flex items-center justify-center rounded-full border-white/40 cursor-pointer active:scale-90 hover:scale-105 duration-700 border bg-black/50 hover:bg-black overflow-hidden ${
+                className={`h-9 flex items-center justify-center rounded-full border-white/25 cursor-pointer active:scale-90 hover:scale-105 duration-700 border bg-black/50 hover:bg-black overflow-hidden ${
                   modalOpen ? "delay-300 w-30" : "blur-2xl w-5"
                 }`}
               >
                 <MdOutlineFileDownload className="me-1 text-lg" />
                 <span>Download</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`fixed bg-black/50 backdrop-blur-sm inset-0 flex items-center justify-center duration-300 z-50 ${
+          confirmDelete ? "" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {selectedImage && confirmDelete && (
+          <div
+            className={`max-w-56 bg-black/20 backdrop-blur-sm border border-white/20 text-center text-white rounded-3xl p-5 flex flex-col items-center gap-4 delay-75`}
+          >
+            <p className="">Are you sure you want to delete this photo?</p>
+            <div className="flex w-full justify-between text-sm">
+              <button
+                className="w-20 py-1 pe-0.5 flex items-center justify-center text-red-500 bg-black/50 rounded-full border border-red-500 cursor-pointer hover:scale-105 duration-300"
+                onClick={async () => {
+                  setDeleting(true);
+                  try {
+                    const index = selectedImage.indexOf("ttm/");
+                    const withFolder = selectedImage.substring(index);
+                    const publicId = withFolder.replace(/\.[^/.]+$/, "");
+
+                    await fetch("/api/delete", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ public_id: publicId }),
+                    });
+
+                    setConfirmDelete(false);
+                    setModalOpen(false);
+                    window.location.reload();
+                  } catch (err) {
+                    alert("Delete failed");
+                    console.log("Delete failed", err);
+                  } finally {
+                    setDeleting(false);
+                  }
+                }}
+              >
+                {deleting ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    <MdDelete className="me-1 text-lg" /> Delete
+                  </>
+                )}
+              </button>
+              <button
+                className=" text-neutral-200 w-20 py-1 bg-black/50 rounded-full border border-neutral-200 cursor-pointer hover:scale-105 duration-300"
+                onClick={() => setConfirmDelete(false)}
+              >
+                Cancel
               </button>
             </div>
           </div>
