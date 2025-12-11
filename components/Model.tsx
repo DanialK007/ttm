@@ -10,9 +10,9 @@ function Model() {
 
   return (
     <>
-      <div className="fixed z-50 top-3 right-3 bg-center md:top-5 md:right-5 bg-black/50 active:scale-75 duration-300 border border-white/25 backdrop-blur-sm rounded-full">
+      <div className="fixed z-50 top-2 right-2 bg-center bg-black/50 active:scale-75 duration-300 border border-white/25 backdrop-blur-sm rounded-full">
         <button
-          className="h-11 px-3 cursor-pointer rounded-full flex items-center justify-center"
+          className="h-11 ps-3 pe-2.5 cursor-pointer rounded-full flex items-center justify-center"
           onClick={() => setModel(!model)}
         >
           {/* <img
@@ -22,7 +22,13 @@ function Model() {
               model && "scale-0 rotate-180"
             }`}
           /> */}
-          <div className={`ps-1.5 text-sm duration-300 uppercase ${model ? "tracking-[0.4rem]" : "tracking-[0.2rem]"}`}>Menu</div>
+          <div
+            className={`ps-1.5 text-sm duration-300 uppercase ${
+              model ? "tracking-[0.4rem]" : "tracking-[0.2rem]"
+            }`}
+          >
+            Menu
+          </div>
           <div className="relative w-6">
             <div
               className={`text-xl text-white/70 absolute inset-0 flex items-center justify-center ease-out duration-700 ${
@@ -43,7 +49,7 @@ function Model() {
       </div>
       <div
         onClick={() => setModel(false)}
-        className={`fixed duration-500 inset-0 bg-black/50 border border-white/25 backdrop-blur-sm z-40 flex items-start justify-end px-5 py-20 transition-opacity ${
+        className={`fixed duration-500 inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-start justify-end p-2 transition-opacity ${
           model ? "" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -51,6 +57,7 @@ function Model() {
           onClick={(e) => e.stopPropagation()}
           className="flex flex-col items-end text-white space-y-3"
         >
+          <div className="h-12"></div>
           <a
             href="#"
             className={`h-11 duration-500 active:scale-75 flex items-center justify-center rounded-full bg-black/50 border border-white/25 backdrop-blur-sm ${
